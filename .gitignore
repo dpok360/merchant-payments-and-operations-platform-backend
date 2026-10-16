@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment files — never commit real secrets
+.env
+.env.local
+.env.*.local
+.env.test.local
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# IDE / Editor
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.kiro
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
