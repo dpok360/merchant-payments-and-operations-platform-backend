@@ -7,9 +7,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity.js';
-import { MerchantApplication } from './merchant-application.entity.js';
-import { Decision } from '../enums/decision.enum.js';
+import { User } from '../../users/entities/user.entity';
+import { MerchantApplication } from './merchant-application.entity';
+import { Decision } from '../enums/decision.enum';
 
 @Entity('review_decisions')
 @Index(['applicationId'])
@@ -21,20 +21,20 @@ export class ReviewDecision {
   @JoinColumn({ name: 'application_id' })
   application: MerchantApplication;
 
-  @Column({ name: 'application_id' })
+  @Column({ type: 'uuid', name: 'application_id' })
   applicationId: string;
 
   @ManyToOne(() => User, { nullable: false })
   @JoinColumn({ name: 'actor_id' })
   actor: User;
 
-  @Column({ name: 'actor_id' })
+  @Column({ type: 'uuid', name: 'actor_id' })
   actorId: string;
 
   @Column({ type: 'enum', enum: Decision })
   decision: Decision;
 
-  @Column({ nullable: true, length: 2000 })
+  @Column({ type: 'varchar', length: 2000, nullable: true })
   notes: string | null;
 
   @CreateDateColumn()

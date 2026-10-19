@@ -9,9 +9,9 @@ import {
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity.js';
-import { ApplicationStatus } from '../enums/application-status.enum.js';
-import { RiskStatus } from '../enums/risk-status.enum.js';
+import { User } from '../../users/entities/user.entity';
+import { ApplicationStatus } from '../enums/application-status.enum';
+import { RiskStatus } from '../enums/risk-status.enum';
 
 @Entity('merchant_applications')
 @Index(['creatorId'])
@@ -21,32 +21,32 @@ export class MerchantApplication {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   businessName: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   legalBusinessName: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   businessType: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   ownerFirstName: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   ownerLastName: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   ownerEmail: string;
 
-  @Column({ nullable: true })
-  ownerPhone: string;
+  @Column({ type: 'varchar', nullable: true })
+  ownerPhone: string | null;
 
   @Column({ type: 'decimal', precision: 12, scale: 2, nullable: true })
-  requestedMonthlyVolume: number;
+  requestedMonthlyVolume: number | null;
 
-  @Column({ nullable: true })
-  businessWebsite: string;
+  @Column({ type: 'varchar', nullable: true })
+  businessWebsite: string | null;
 
   @Column({ type: 'enum', enum: ApplicationStatus, default: ApplicationStatus.DRAFT })
   status: ApplicationStatus;
@@ -54,24 +54,24 @@ export class MerchantApplication {
   @Column({ type: 'enum', enum: RiskStatus, default: RiskStatus.PENDING })
   riskStatus: RiskStatus;
 
-  @Column({ nullable: true, type: 'int' })
-  riskScore: number;
+  @Column({ type: 'int', nullable: true })
+  riskScore: number | null;
 
   @Column({ type: 'jsonb', nullable: true })
-  riskMetadata: Record<string, unknown>;
+  riskMetadata: Record<string, unknown> | null;
 
   @ManyToOne(() => User, { nullable: false })
   @JoinColumn({ name: 'creator_id' })
   creator: User;
 
-  @Column({ name: 'creator_id' })
+  @Column({ type: 'uuid', name: 'creator_id' })
   creatorId: string;
 
   @ManyToOne(() => User, { nullable: true })
   @JoinColumn({ name: 'assigned_reviewer_id' })
   assignedReviewer: User | null;
 
-  @Column({ name: 'assigned_reviewer_id', nullable: true })
+  @Column({ type: 'uuid', name: 'assigned_reviewer_id', nullable: true })
   assignedReviewerId: string | null;
 
   @CreateDateColumn()
@@ -80,16 +80,16 @@ export class MerchantApplication {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ nullable: true, type: 'timestamptz' })
+  @Column({ type: 'timestamptz', nullable: true })
   submittedAt: Date | null;
 
-  @Column({ nullable: true, type: 'timestamptz' })
+  @Column({ type: 'timestamptz', nullable: true })
   reviewedAt: Date | null;
 
-  @Column({ nullable: true, type: 'timestamptz' })
+  @Column({ type: 'timestamptz', nullable: true })
   riskProcessedAt: Date | null;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   riskJobKey: string | null;
 
   @VersionColumn()
